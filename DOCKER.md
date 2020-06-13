@@ -13,13 +13,24 @@ This is optionnal as they will be pulled automatically if necessary.
 
 ```shell
 # Get Telegraf
-docker pull telegraf:1.14.3
+$ docker pull telegraf:1.14.3
+Unable to find image 'telegraf:1.14.3' locally
+1.14.3: Pulling from library/telegraf
+1c6172af85ee: Pull complete
+b194b0e3c928: Pull complete
 
 # Get InfluxDB
-docker pull influxdb:1.8.0
+$ docker pull influxdb:1.8.0
+Unable to find image 'influxdb:1.8.0' locally
+1.8.0: Pulling from library/influxdb
+81fc19181915: Pull complete
+[...]
 
 # Get Grafana
-docker pull grafana/grafana:7.0.3
+$ docker pull grafana/grafana:7.0.3
+Unable to find image 'grafana/grafana:7.0.3' locally
+7.0.3: Pulling from grafana/grafana
+cbdbe7a5bc2a: Pull complete
 ```
 
 ## List Docker images
@@ -56,13 +67,19 @@ c9793adb35c4        tig                 bridge              local
 
 ```shell
 # Run InfluxDB container
-docker run -d --name influxdb -p 8083:8083 -p 8086:8086 --network=tig influxdb:1.8.0
+$ docker run -d --name influxdb -p 8083:8083 -p 8086:8086 --network=tig influxdb:1.8.0
+646605ce66537b10b8b7f229a82c150d5ce2b3773e9fdf2532001513b845db29
+$
 
 # Run Telegraf
-docker run -d --name telegraf -v $PWD/telegraf.conf:/etc/telegraf/telegraf.conf:ro --network=tig telegraf:1.14.3
+$ docker run -d --name telegraf -v $PWD/config_files/telegraf.conf:/etc/telegraf/telegraf.conf:ro --network=tig telegraf:1.14.3
+646605ce66537b10b8b7f229a82c150d5ce2b322445534325435435ce2324342
+$
 
 # Run Grafana
-docker run -d --name grafana -p 3000:3000 --network=tig grafana/grafana:7.0.3
+$ docker run -d --name grafana -p 3000:3000 --network=tig grafana/grafana:7.0.3
+9ba718892a6e31a821cca20b01798f3ba2940e299130b9362687d66de4f97ac7
+$
 ```
 
 ## List Docker running containers
@@ -136,3 +153,12 @@ docker network inspect tig
     }
 ]
 ```
+
+## Connect to Garafana
+
+You can now use the Grafana GUI http://localhost:3000
+The default username and password are _admin/admin_.
+The datasource is already configured. It uses InfluxDB.
+There is no dashboard configured. You can create your own dashboards.
+
+![Grafana.png](./medias/Grafana.png)

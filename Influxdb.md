@@ -484,9 +484,10 @@ time                neighbors/neighbor/state/neighbor_address
 ```
 
 
-
 ```
-> SELECT "neighbors/neighbor/state/session_state" FROM "openconfig_bgp" WHERE ("source" = '10.83.28.122'  AND "neighbor_address" = '10.10.10.4') ORDER BY DESC LIMIT 1
+> SELECT "neighbors/neighbor/state/session_state" FROM "openconfig_bgp" \
+    WHERE ("source" = '10.83.28.122'  AND "neighbor_address" = '10.10.10.4') \
+    ORDER BY DESC LIMIT 1
 name: openconfig_bgp
 time                neighbors/neighbor/state/session_state
 ----                --------------------------------------
@@ -496,7 +497,8 @@ time                neighbors/neighbor/state/session_state
 
 
 ```
-> SELECT LAST("neighbors/neighbor/state/session_state") FROM "openconfig_bgp" WHERE (source='10.83.28.122' AND "neighbor_address" = '10.10.10.4')
+> SELECT LAST("neighbors/neighbor/state/session_state") FROM "openconfig_bgp" \
+    WHERE (source='10.83.28.122' AND "neighbor_address" = '10.10.10.4')
 name: openconfig_bgp
 time                last
 ----                ----
@@ -505,7 +507,9 @@ time                last
 ```
 
 ```
-> SELECT "source",  "neighbor_address", LAST("neighbors/neighbor/state/session_state") FROM "openconfig_bgp" WHERE (source='10.83.28.122' AND "neighbor_address" = '10.10.10.4')
+> SELECT "source",  "neighbor_address", LAST("neighbors/neighbor/state/session_state") \
+    FROM "openconfig_bgp" \
+    WHERE (source='10.83.28.122' AND "neighbor_address" = '10.10.10.4')
 name: openconfig_bgp
 time                source       neighbor_address last
 ----                ------       ---------------- ----
@@ -514,7 +518,13 @@ time                source       neighbor_address last
 ```
 
 ```
-> SELECT "source", "neighbors/neighbor/state/neighbor_address", "neighbors/neighbor/config/peer_as", "neighbors/neighbor/config/enabled" FROM "openconfig_bgp" WHERE (source='10.83.28.122' AND "neighbor_address" = '10.10.10.4') ORDER BY DESC LIMIT 10
+> SELECT "source", "neighbors/neighbor/state/neighbor_address", \
+    "neighbors/neighbor/config/peer_as", \
+    "neighbors/neighbor/config/enabled" \
+    FROM "openconfig_bgp" \
+    WHERE (source='10.83.28.122' AND "neighbor_address" = '10.10.10.4') \
+    ORDER BY DESC LIMIT 10
+
 name: openconfig_bgp
 time                source       neighbors/neighbor/state/neighbor_address neighbors/neighbor/config/peer_as neighbors/neighbor/config/enabled
 ----                ------       ----------------------------------------- --------------------------------- ---------------------------------
@@ -525,7 +535,12 @@ time                source       neighbors/neighbor/state/neighbor_address neigh
 ```
 
 ```
-> SELECT "source", "neighbors/neighbor/state/neighbor_address" AS "neighbor_address", "neighbors/neighbor/config/peer_as" AS "peer-as", "neighbors/neighbor/config/enabled" AS "peer_enabled" FROM "openconfig_bgp" GROUP BY "source", "neighbor_address" ORDER BY DESC LIMIT 10
+> SELECT "source", "neighbors/neighbor/state/neighbor_address" AS "neighbor_address", \
+    "neighbors/neighbor/config/peer_as" AS "peer-as", \
+    "neighbors/neighbor/config/enabled" AS "peer_enabled" \
+    FROM "openconfig_bgp" \
+    GROUP BY "source", "neighbor_address" ORDER BY DESC LIMIT 10
+
 name: openconfig_bgp
 tags: neighbor_address=10.10.10.4, source=10.83.28.122
 time                source       neighbor_address peer-as peer_enabled

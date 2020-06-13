@@ -19,13 +19,11 @@
 This repository shows the steps to demo streaming telemetry with Arista EOS devices and Telegraf.
 It covers both OpenConfig telemetry and native telemetry.
 
-- __Telegraf__ is an open source collector written in GO.
-Telegraf collects data and writes them into a database.
-It is plugin-driven (it has input plugins, output plugins, ...)
+- [__Telegraf__](https://www.influxdata.com/time-series-platform/telegraf/) is an open source collector written in GO. it collects data and writes them into a database and is plugin-driven (it has input plugins, output plugins, ...)
 
-- __InfluxDB__ is an open source time series database written in GO.
+- [__InfluxDB__](https://www.influxdata.com/products/influxdb-overview/) is an open source time series database written in GO.
 
-- __Grafana__: An open source tool used to visualize time series data. It supports __InfluxDB__ and other backend. It runs as a web application. It is written in GO.
+- [__Grafana__](https://grafana.com/): An open source tool used to visualize time series data. It supports __InfluxDB__ and other backend. It runs as a web application. It is written in GO.
 
 __Additional resources:__
 
@@ -43,7 +41,7 @@ So devices will stream OpenConfig and EOS native data to __Telegraf__. __Telegra
 
 ### Arista devices configuration
 
-Enable and allow gNMI:
+Enable and allow gNMI on Arista EOS devices:
 
 ```
 arista-sw> enable
@@ -75,28 +73,12 @@ So the devices will stream OpenConfig and EOS native data to __Telegraf__. And _
 
 In this demo, the gNMI input plugin is configured with 2 different subscription requests: one to subscribe to a set of OpenConfig paths and another one to subscribe to a set of native paths. Update [telegraf configuration](config_files/telegraf.conf) to configure IP addresses of your devices
 
-- _OpenConfig queries_
-
 ```conf
-[[inputs.cisco_telemetry_gnmi]]
-  ## Address and port of the GNMI GRPC server
-  addresses = ["10.83.28.122:6030", "10.83.28.125:6030"]
+addresses = ["10.83.28.122:6030", "10.83.28.125:6030"]
 
-  ## credentials
-  username = "arista"
-  password = "arista"
-```
-
-- _EOS Native Paths_
-
-```conf
-[[inputs.cisco_telemetry_gnmi]]
-  ## Address and port of the GNMI GRPC server
-  addresses = ["10.83.28.122:6030", "10.83.28.125:6030"]
-
-  ## credentials
-  username = "arista"
-  password = "arista"
+## credentials
+username = "arista"
+password = "arista"
 ```
 
 You can update EOS sysdb path by updating `inputs.cisco_telemetry_gnmi.subscription` as well.
