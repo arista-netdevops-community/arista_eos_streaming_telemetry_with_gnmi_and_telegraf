@@ -1,6 +1,6 @@
 ---
 version: "3"
- 
+
 networks:
  tig:
 
@@ -13,17 +13,17 @@ services:
    networks:
      - tig
    image: influxdb:1.8.0
- 
+
  telegraf:
    container_name: telegraf
    image: telegraf:1.14.3
    networks:
      - tig
    volumes:
-     - $PWD/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+     - $PWD/config_files/telegraf.conf:/etc/telegraf/telegraf.conf:ro
    depends_on:
      - influxdb
- 
+
  grafana:
    container_name: grafana
    environment:
@@ -35,8 +35,7 @@ services:
      - tig
    image: grafana/grafana:7.0.3
    volumes:
-      - $PWD/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+      - $PWD/config_files/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
    depends_on:
      - influxdb
 
- 
