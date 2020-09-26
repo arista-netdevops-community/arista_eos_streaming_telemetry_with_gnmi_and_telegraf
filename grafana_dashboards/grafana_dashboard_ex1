@@ -1,0 +1,1975 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 10,
+  "iteration": 1601153412945,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "center",
+            "displayMode": "color-text",
+            "width": 250
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              },
+              {
+                "color": "#EAB839",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "neighbor_address"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "state"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "frameIndex": 0,
+        "showHeader": true
+      },
+      "pluginVersion": "7.0.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "neighbor_address"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "openconfig_bgp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"neighbors/neighbor/afi_safis/afi_safi/state/prefixes/received\") AS \"pfxRcvd\", last(\"neighbors/neighbor/afi_safis/afi_safi/state/prefixes/sent\") AS \"pfxSent\", last(\"neighbors/neighbor/state/session_state\") AS \"state\", last(\"neighbor_address\"), last(\"neighbors/neighbor/state/peer_as\") AS \"Peer ASN\" FROM \"openconfig_bgp\" WHERE (\"source\" =~ /^$bgpSources$/) AND $timeFilter GROUP BY \"neighbor_address\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "neighbors/neighbor/afi_safis/afi_safi/state/prefixes/received"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "pfxRcvd"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "neighbors/neighbor/afi_safis/afi_safi/state/prefixes/sent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "pfxSent"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "neighbors/neighbor/state/session_state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "state"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "neighbors/neighbor/state/peer_as"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Peer ASN"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "neighbor_address"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "source",
+              "operator": "=~",
+              "value": "/^$bgpSources$/"
+            }
+          ]
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"neighbor_address\",\"neighbors/neighbor/afi_safis/afi_safi/state/prefixes/received\" AS pfxRcvd, \"neighbors/neighbor/afi_safis/afi_safi/state/prefixes/sent\" AS pfxSent FROM \"openconfig_bgp\" WHERE source='10.83.13.212'  AND \"afi_safi_name\"='IPV4_UNICAST' ",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "neighbor_address"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "openconfig_bgp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"neighbor_address\", \"neighbors/neighbor/afi_safis/afi_safi/state/prefixes/received\" AS \"pfxRcvd\", \"neighbors/neighbor/afi_safis/afi_safi/state/prefixes/sent\" AS \"pfxSent\" FROM \"openconfig_bgp\" WHERE (\"source\" = '10.83.13.212' AND \"afi_safi_name\" = 'IPV4_UNICAST') AND $timeFilter",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "neighbors/neighbor/afi_safis/afi_safi/state/prefixes/received"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "pfxRcvd"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "neighbors/neighbor/afi_safis/afi_safi/state/prefixes/sent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "pfxSent"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "neighbor_address"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "source",
+              "operator": "=",
+              "value": "10.83.13.212"
+            },
+            {
+              "condition": "AND",
+              "key": "afi_safi_name",
+              "operator": "=",
+              "value": "IPV4_UNICAST"
+            },
+            {
+              "condition": "AND",
+              "key": "neighbor_address",
+              "operator": "=",
+              "value": "172.18.255.5"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "BGP Neighbors",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Time",
+                "neighbor_address",
+                "pfxRcvd",
+                "pfxSent",
+                "state",
+                "Peer ASN"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 7,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "7.0.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "CPU",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": " SELECT \"util\" FROM \"kernel\" WHERE (\"source\" = '10.83.13.139')",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "util"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "source",
+              "operator": "=~",
+              "value": "/^$switchIP$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "CPU utilization",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 7,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 13,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "7.0.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "RAM",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": " SELECT \"util\" FROM \"kernel\" WHERE (\"source\" = '10.83.13.139')",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "memAvailable"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "source",
+              "operator": "=~",
+              "value": "/^$switchIP$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Memory Available",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "decbytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "7.0.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$intfvar-IN",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "ifcounters",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT derivative(mean(\"in_octets\"), 1s) *8 FROM \"ifcounters\" WHERE (\"source\" =~ /^$switchIP$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "in_octets"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "source",
+              "operator": "=~",
+              "value": "/^$switchIP$/"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=~",
+              "value": "/^$intfvar$/"
+            }
+          ]
+        },
+        {
+          "alias": "$intfvar-OUT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "ifcounters",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT derivative(mean(\"in_octets\"), 1s) *8 FROM \"ifcounters\" WHERE (\"source\" =~ /^$switchIP$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "out_octets"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "source",
+              "operator": "=~",
+              "value": "/^$switchIP$/"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=~",
+              "value": "/^$intfvar$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "BitRate In/Out",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "bps",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "rgb(29, 207, 8)",
+                "value": null
+              },
+              {
+                "color": "rgb(181, 21, 36)",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbits"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 14,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "7.0.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "RAM",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": " SELECT \"util\" FROM \"kernel\" WHERE (\"source\" = '10.83.13.139')",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "memAvailable"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "memAvailable"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "memTotal"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "memTotal"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "source",
+              "operator": "=~",
+              "value": "/^$switchIP$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Memory Usage",
+      "type": "gauge"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 25,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "172.18.255.13",
+          "value": "172.18.255.13"
+        },
+        "datasource": "InfluxDB",
+        "definition": "SHOW TAG VALUES FROM \"openconfig_bgp\" WITH KEY = \"neighbor_address\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "bgpneighbors",
+        "options": [
+          {
+            "selected": false,
+            "text": "1.1.1.1",
+            "value": "1.1.1.1"
+          },
+          {
+            "selected": false,
+            "text": "10.0.0.2",
+            "value": "10.0.0.2"
+          },
+          {
+            "selected": false,
+            "text": "10.10.10.2",
+            "value": "10.10.10.2"
+          },
+          {
+            "selected": false,
+            "text": "10.151.250.252",
+            "value": "10.151.250.252"
+          },
+          {
+            "selected": false,
+            "text": "10.2.18.126",
+            "value": "10.2.18.126"
+          },
+          {
+            "selected": false,
+            "text": "10.2.18.65",
+            "value": "10.2.18.65"
+          },
+          {
+            "selected": false,
+            "text": "10.2.18.83",
+            "value": "10.2.18.83"
+          },
+          {
+            "selected": false,
+            "text": "10.200.200.1",
+            "value": "10.200.200.1"
+          },
+          {
+            "selected": false,
+            "text": "10.200.200.2",
+            "value": "10.200.200.2"
+          },
+          {
+            "selected": false,
+            "text": "10.255.251.0",
+            "value": "10.255.251.0"
+          },
+          {
+            "selected": false,
+            "text": "10.255.251.1",
+            "value": "10.255.251.1"
+          },
+          {
+            "selected": false,
+            "text": "10.255.251.4",
+            "value": "10.255.251.4"
+          },
+          {
+            "selected": false,
+            "text": "10.255.251.5",
+            "value": "10.255.251.5"
+          },
+          {
+            "selected": false,
+            "text": "10.50.50.1",
+            "value": "10.50.50.1"
+          },
+          {
+            "selected": false,
+            "text": "10.50.50.2",
+            "value": "10.50.50.2"
+          },
+          {
+            "selected": false,
+            "text": "100.76.132.141",
+            "value": "100.76.132.141"
+          },
+          {
+            "selected": false,
+            "text": "100.76.132.142",
+            "value": "100.76.132.142"
+          },
+          {
+            "selected": false,
+            "text": "100.76.234.38",
+            "value": "100.76.234.38"
+          },
+          {
+            "selected": false,
+            "text": "172.17.5.173",
+            "value": "172.17.5.173"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.0",
+            "value": "172.18.255.0"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.1",
+            "value": "172.18.255.1"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.10",
+            "value": "172.18.255.10"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.11",
+            "value": "172.18.255.11"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.12",
+            "value": "172.18.255.12"
+          },
+          {
+            "selected": true,
+            "text": "172.18.255.13",
+            "value": "172.18.255.13"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.14",
+            "value": "172.18.255.14"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.15",
+            "value": "172.18.255.15"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.2",
+            "value": "172.18.255.2"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.3",
+            "value": "172.18.255.3"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.4",
+            "value": "172.18.255.4"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.5",
+            "value": "172.18.255.5"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.6",
+            "value": "172.18.255.6"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.7",
+            "value": "172.18.255.7"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.8",
+            "value": "172.18.255.8"
+          },
+          {
+            "selected": false,
+            "text": "172.18.255.9",
+            "value": "172.18.255.9"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.0",
+            "value": "172.31.255.0"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.1",
+            "value": "172.31.255.1"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.10",
+            "value": "172.31.255.10"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.11",
+            "value": "172.31.255.11"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.12",
+            "value": "172.31.255.12"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.13",
+            "value": "172.31.255.13"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.14",
+            "value": "172.31.255.14"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.15",
+            "value": "172.31.255.15"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.2",
+            "value": "172.31.255.2"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.3",
+            "value": "172.31.255.3"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.4",
+            "value": "172.31.255.4"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.5",
+            "value": "172.31.255.5"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.6",
+            "value": "172.31.255.6"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.7",
+            "value": "172.31.255.7"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.8",
+            "value": "172.31.255.8"
+          },
+          {
+            "selected": false,
+            "text": "172.31.255.9",
+            "value": "172.31.255.9"
+          },
+          {
+            "selected": false,
+            "text": "192.168.10.1",
+            "value": "192.168.10.1"
+          },
+          {
+            "selected": false,
+            "text": "192.168.13.3",
+            "value": "192.168.13.3"
+          },
+          {
+            "selected": false,
+            "text": "192.168.255.1",
+            "value": "192.168.255.1"
+          },
+          {
+            "selected": false,
+            "text": "192.168.255.2",
+            "value": "192.168.255.2"
+          },
+          {
+            "selected": false,
+            "text": "192.168.255.3",
+            "value": "192.168.255.3"
+          },
+          {
+            "selected": false,
+            "text": "192.168.255.4",
+            "value": "192.168.255.4"
+          },
+          {
+            "selected": false,
+            "text": "192.168.255.5",
+            "value": "192.168.255.5"
+          },
+          {
+            "selected": false,
+            "text": "192.168.255.6",
+            "value": "192.168.255.6"
+          },
+          {
+            "selected": false,
+            "text": "2.2.2.2",
+            "value": "2.2.2.2"
+          },
+          {
+            "selected": false,
+            "text": "33.33.33.33",
+            "value": "33.33.33.33"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"openconfig_bgp\" WITH KEY = \"neighbor_address\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "10.83.13.212",
+          "value": "10.83.13.212"
+        },
+        "datasource": "InfluxDB",
+        "definition": "SHOW TAG VALUES FROM \"openconfig_bgp\" WITH KEY = \"source\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "bgpSources",
+        "options": [
+          {
+            "selected": false,
+            "text": "10.81.116.167",
+            "value": "10.81.116.167"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.118",
+            "value": "10.83.13.118"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.119",
+            "value": "10.83.13.119"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.138",
+            "value": "10.83.13.138"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.139",
+            "value": "10.83.13.139"
+          },
+          {
+            "selected": true,
+            "text": "10.83.13.212",
+            "value": "10.83.13.212"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.213",
+            "value": "10.83.13.213"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.214",
+            "value": "10.83.13.214"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.215",
+            "value": "10.83.13.215"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.216",
+            "value": "10.83.13.216"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.217",
+            "value": "10.83.13.217"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"openconfig_bgp\" WITH KEY = \"source\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "Ethernet24",
+          "value": "Ethernet24"
+        },
+        "datasource": "InfluxDB",
+        "definition": "SHOW TAG VALUES FROM \"ifcounters\" WITH KEY=\"name\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "intfvar",
+        "options": [
+          {
+            "selected": false,
+            "text": "Ethernet1",
+            "value": "Ethernet1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet10",
+            "value": "Ethernet10"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet11",
+            "value": "Ethernet11"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet12",
+            "value": "Ethernet12"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet13",
+            "value": "Ethernet13"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet14",
+            "value": "Ethernet14"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet15",
+            "value": "Ethernet15"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet16",
+            "value": "Ethernet16"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet17",
+            "value": "Ethernet17"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet18",
+            "value": "Ethernet18"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet19",
+            "value": "Ethernet19"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet2",
+            "value": "Ethernet2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet20",
+            "value": "Ethernet20"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet21",
+            "value": "Ethernet21"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet22",
+            "value": "Ethernet22"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet23",
+            "value": "Ethernet23"
+          },
+          {
+            "selected": true,
+            "text": "Ethernet24",
+            "value": "Ethernet24"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet25",
+            "value": "Ethernet25"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet26",
+            "value": "Ethernet26"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet27",
+            "value": "Ethernet27"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet28",
+            "value": "Ethernet28"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet29",
+            "value": "Ethernet29"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet3",
+            "value": "Ethernet3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet30",
+            "value": "Ethernet30"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet31",
+            "value": "Ethernet31"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet32",
+            "value": "Ethernet32"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet33",
+            "value": "Ethernet33"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet34",
+            "value": "Ethernet34"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet35",
+            "value": "Ethernet35"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet36",
+            "value": "Ethernet36"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet37",
+            "value": "Ethernet37"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet38",
+            "value": "Ethernet38"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet39",
+            "value": "Ethernet39"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet4",
+            "value": "Ethernet4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet40",
+            "value": "Ethernet40"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet41",
+            "value": "Ethernet41"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet42",
+            "value": "Ethernet42"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet43",
+            "value": "Ethernet43"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet44",
+            "value": "Ethernet44"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet45",
+            "value": "Ethernet45"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet46",
+            "value": "Ethernet46"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet47",
+            "value": "Ethernet47"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet48",
+            "value": "Ethernet48"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet49/1",
+            "value": "Ethernet49/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet49/2",
+            "value": "Ethernet49/2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet49/3",
+            "value": "Ethernet49/3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet49/4",
+            "value": "Ethernet49/4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet5",
+            "value": "Ethernet5"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet50/1",
+            "value": "Ethernet50/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet50/2",
+            "value": "Ethernet50/2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet50/3",
+            "value": "Ethernet50/3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet50/4",
+            "value": "Ethernet50/4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet51/1",
+            "value": "Ethernet51/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet51/2",
+            "value": "Ethernet51/2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet51/3",
+            "value": "Ethernet51/3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet51/4",
+            "value": "Ethernet51/4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet52/1",
+            "value": "Ethernet52/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet52/2",
+            "value": "Ethernet52/2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet52/3",
+            "value": "Ethernet52/3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet52/4",
+            "value": "Ethernet52/4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet53/1",
+            "value": "Ethernet53/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet53/2",
+            "value": "Ethernet53/2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet53/3",
+            "value": "Ethernet53/3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet53/4",
+            "value": "Ethernet53/4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet54/1",
+            "value": "Ethernet54/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet54/2",
+            "value": "Ethernet54/2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet54/3",
+            "value": "Ethernet54/3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet54/4",
+            "value": "Ethernet54/4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet55/1",
+            "value": "Ethernet55/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet56/1",
+            "value": "Ethernet56/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet57/1",
+            "value": "Ethernet57/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet58/1",
+            "value": "Ethernet58/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet59/1",
+            "value": "Ethernet59/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet6",
+            "value": "Ethernet6"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet60/1",
+            "value": "Ethernet60/1"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet60/2",
+            "value": "Ethernet60/2"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet60/3",
+            "value": "Ethernet60/3"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet60/4",
+            "value": "Ethernet60/4"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet7",
+            "value": "Ethernet7"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet8",
+            "value": "Ethernet8"
+          },
+          {
+            "selected": false,
+            "text": "Ethernet9",
+            "value": "Ethernet9"
+          },
+          {
+            "selected": false,
+            "text": "Management1",
+            "value": "Management1"
+          },
+          {
+            "selected": false,
+            "text": "Port-Channel1",
+            "value": "Port-Channel1"
+          },
+          {
+            "selected": false,
+            "text": "Port-Channel1000",
+            "value": "Port-Channel1000"
+          },
+          {
+            "selected": false,
+            "text": "Port-Channel3",
+            "value": "Port-Channel3"
+          },
+          {
+            "selected": false,
+            "text": "Port-Channel4",
+            "value": "Port-Channel4"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"ifcounters\" WITH KEY=\"name\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "10.83.13.139",
+          "value": "10.83.13.139"
+        },
+        "datasource": "InfluxDB",
+        "definition": "SHOW TAG VALUES FROM \"ifcounters\" WITH KEY=\"source\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "switchIP",
+        "options": [
+          {
+            "selected": false,
+            "text": "10.81.116.167",
+            "value": "10.81.116.167"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.118",
+            "value": "10.83.13.118"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.119",
+            "value": "10.83.13.119"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.138",
+            "value": "10.83.13.138"
+          },
+          {
+            "selected": true,
+            "text": "10.83.13.139",
+            "value": "10.83.13.139"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.212",
+            "value": "10.83.13.212"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.213",
+            "value": "10.83.13.213"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.214",
+            "value": "10.83.13.214"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.215",
+            "value": "10.83.13.215"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.216",
+            "value": "10.83.13.216"
+          },
+          {
+            "selected": false,
+            "text": "10.83.13.217",
+            "value": "10.83.13.217"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"ifcounters\" WITH KEY=\"source\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "gnmi",
+  "uid": "ky1bhqdMz",
+  "version": 37
+}
