@@ -2,18 +2,18 @@
 
 # Tables of content
 
-[About this repository](#about-this-repository)
-[About Telegraf](#about-telegraf)
-[About InfluxDB](#about-influxdb)
-[About Grafana](#about-grafana)
-[Demo building blocks](#demo-building-blocks)
-[Arista devices configuration](#arista-devices-configuration)
-[Telegraf configuration file](#telegraf-configuration-file)
-[Build the TIG stack](#build-the-tig-stack)
-[Verify Telegraf logs](#verify-telegraf-logs)
-[InfluxDB query examples using CLI](#influxdb-query-examples-using-cli)
-[InfluxDB query examples using Python](#influxdb-query-examples-using-python)
-[Grafana GUI](#grafana-gui)
+[About this repository](#about-this-repository)  
+[About Telegraf](#about-telegraf)   
+[About InfluxDB](#about-influxdb)   
+[About Grafana](#about-grafana)  
+[Demo building blocks](#demo-building-blocks)  
+[Arista devices configuration](#arista-devices-configuration)  
+[Telegraf configuration file](#telegraf-configuration-file)  
+[Build the TIG stack](#build-the-tig-stack)  
+[Verify Telegraf logs](#verify-telegraf-logs) 
+[InfluxDB query examples using CLI](#influxdb-query-examples-using-cli) 
+[InfluxDB query examples using Python](#influxdb-query-examples-using-python)  
+[Grafana GUI](#grafana-gui)  
 
 # About this repository
 
