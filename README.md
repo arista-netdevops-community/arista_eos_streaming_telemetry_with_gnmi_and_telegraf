@@ -1,5 +1,3 @@
-![GitHub](https://img.shields.io/github/license/ksator/arista_eos_streaming_telemetry_with_gnmi_and_telegraf)
-
 # Tables of content
 
 [About this repository](#about-this-repository)  
@@ -10,10 +8,10 @@
 [Arista devices configuration](#arista-devices-configuration)  
 [Telegraf configuration file](#telegraf-configuration-file)  
 [Build the TIG stack](#build-the-tig-stack)  
-[Verify Telegraf logs](#verify-telegraf-logs) 
-[InfluxDB query examples using CLI](#influxdb-query-examples-using-cli) 
-[InfluxDB query examples using Python](#influxdb-query-examples-using-python)  
-[Grafana GUI](#grafana-gui)  
+[Verify Telegraf logs](#verify-telegraf-logs)  
+[InfluxDB query examples using CLI](#influxdb-query-examples-using-cli)  
+[InfluxDB query examples using Python](#influxdb-query-examples-using-python)   
+[Grafana GUI](#grafana-gui)   
 
 # About this repository
 
@@ -53,16 +51,16 @@ Enable and allow gNMI:
 enable
 configure
 username arista secret 0 arista
-ip access-list GNMI
-  10 permit tcp any any eq gnmi
 management api gnmi
   transport grpc def
-    ip access-group GNMI
+    vrf MGMT
   provider eos-native
 ```
 
 `provider eos-native` is required to serve gNMI subscription requests to EOS native paths.
 So, using the above configuration, a gNMI client can subscribes to both OpenConfig paths and native paths.
+
+run the command `sho management api gnmi` to verify 
 
 # Telegraf configuration file
 
